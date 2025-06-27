@@ -34,8 +34,10 @@ def main(write_files_to_buckets=True):
     print("Insert status: ", insert_status)
 
     print("Reading 'movie_details' table...")
+
+    select_movie_details_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", "select_from_movie_details.sql")
     result = mysqldb.select_from_table(
-        conn, "sql/select_from_movie_details.sql", write_to_file=True
+        conn, select_movie_details_path, write_to_file=True
     )
     # print(result)
 

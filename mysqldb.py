@@ -62,7 +62,7 @@ def generate_genres_table(conn, data, leave_open=False):
     genre_create = "CREATE TABLE genres (id INTEGER PRIMARY KEY, name VARCHAR(32))"
     genre_insert = dict_list_to_insert_str(data, "genres", ["id", "name"])
     genre_read = None
-    genre_select_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", select_from_genres.sql)
+    genre_select_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", "select_from_genres.sql")
     with open(genre_select_path, "r") as f:
         genre_read = f.read()
 
