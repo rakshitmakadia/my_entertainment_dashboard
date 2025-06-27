@@ -1,0 +1,23 @@
+CREATE TABLE movie_details (
+    id INT UNSIGNED PRIMARY KEY,
+    imdb_id VARCHAR(16),
+    title VARCHAR(128) NOT NULL,
+    original_title VARCHAR(128),
+    tagline TINYTEXT,
+    overview TEXT,
+    runtime SMALLINT UNSIGNED,
+    status VARCHAR(32),
+    release_date DATE,
+    genres JSON,
+    original_language VARCHAR(8),
+    spoken_languages JSON,
+    origin_country JSON,
+    popularity DECIMAL(16, 4),
+    vote_average DECIMAL(16, 4),
+    vote_count INT UNSIGNED,
+    backdrop_path VARCHAR(64),
+    poster_path VARCHAR(64),
+    belongs_to_collection VARCHAR(144),
+    src_tag VARCHAR(128),
+    publication_id BIGINT UNSIGNED
+);
