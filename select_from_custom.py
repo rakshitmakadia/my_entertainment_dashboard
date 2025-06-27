@@ -1,6 +1,7 @@
 import mysqldb
 import sys
 import filebase
+import os
 
 def main():
     """
