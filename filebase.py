@@ -40,7 +40,7 @@ def get_latest_url_file():
             + res[0]["LastModified"].strftime("%Y%m%d%H%M%S")
             + ".txt"
         )
-        file_path = os.path.join(constants.BASE_FILE_PATH, file_name)
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH, file_name)
 
         print(
             "Got the latest file: "
@@ -80,8 +80,8 @@ def upload_to_folder():
     )
 
     current_date_prefix = datetime.now().date().strftime("%Y%m%d") + "/"
-
-    for root, dirs, files in os.walk(constants.BASE_FILE_PATH):
+    tmp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH)
+    for root, dirs, files in os.walk(tmp_path):
         for file in files:
             local_path = os.path.join(root, file)
             relative_path = os.path.relpath(local_path, constants.BASE_FILE_PATH)
@@ -142,8 +142,8 @@ def create_local_tmp():
 
     :return: None
     """
-    
-    os.makedirs(os.path.dirname(constants.BASE_FILE_PATH), exist_ok=True)
+    tmp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH)
+    os.makedirs(tmp_path, exist_ok=True)
     
     return None
 
@@ -158,7 +158,8 @@ def local_tmp_cleanup():
 
     :return: None
     """
-    for root, dirs, files in os.walk(constants.BASE_FILE_PATH):
+    tmp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH)
+    for root, dirs, files in os.walk(tmp_path):
         for file in files:
             local_path = os.path.join(root, file)
             try:
