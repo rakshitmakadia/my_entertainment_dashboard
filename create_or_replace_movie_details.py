@@ -1,6 +1,7 @@
 import mysqldb
 import tmdb
 import filebase
+import os
 
 
 def main(write_files_to_buckets=True):
