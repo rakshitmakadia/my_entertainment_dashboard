@@ -1,15 +1,18 @@
 name: Generate Movie Details - Dev
 
 on:
-  schedule:
-  - cron: "30 3 * * 6"
+  pull_request:
+    types: closed 
+    branches:
+    - main
+    - dev
 
 permissions:
   contents: read
 
 jobs:
   populate_data:
-    name: poplulate data to mysql table
+    name: poplulate data to mysql table movie_details
     runs-on: ubuntu-latest
     environment: Dev 
     steps:
