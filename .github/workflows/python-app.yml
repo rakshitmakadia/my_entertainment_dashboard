@@ -1,4 +1,4 @@
-name: Generate Movie Details
+name: Generate Movie Details - Dev
 
 on:
   schedule:
@@ -11,6 +11,7 @@ jobs:
   populate_data:
     name: poplulate data to mysql table
     runs-on: ubuntu-latest
+    environment: Dev 
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
