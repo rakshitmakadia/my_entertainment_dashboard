@@ -1,7 +1,7 @@
 import os
 
 TIMEOUT = 5
-BASE_FILE_PATH = ".\\tmp"
+BASE_FILE_PATH = "./tmp"
 
 
 ### FILEBASE
