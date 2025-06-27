@@ -16,6 +16,8 @@ def main():
 
     :return: None
     """
+
+    firebase.create_local_tmp()
     sql_file = sys.argv[1]
     conn = mysqldb.get_mysql_conn()
     result = mysqldb.select_from_table(conn, sql_file, write_to_file=True)

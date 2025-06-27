@@ -22,6 +22,7 @@ def main(write_files_to_buckets=True):
     :return: None
     """
 
+    firebase.create_local_tmp()
     conn = mysqldb.get_mysql_conn()
     url_file = filebase.get_latest_url_file()
     movie_ids = tmdb.get_movies_from_urls(url_file)

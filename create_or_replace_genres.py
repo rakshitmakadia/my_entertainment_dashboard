@@ -16,6 +16,7 @@ def main(write_files_to_buckets=True):
     :param write_files_to_buckets: A boolean indicating whether to write the files to the buckets
     :return: None
     """
+    filebase.create_local_tmp()
     conn = mysqldb.get_mysql_conn()
     data = tmdb.get_all_movie_genres()
     genre_table_data = mysqldb.generate_genres_table(conn, data)

@@ -136,6 +136,16 @@ def delete_folder_30days():
 
     return None
 
+def create_local_tmp():
+    """
+    Creates the local directory specified in constants.BASE_FILE_PATH if it does not exist.
+
+    :return: None
+    """
+    
+    os.makedirs(os.path.dirname(constants.BASE_FILE_PATH), exist_ok=True)
+    
+    return None
 
 def local_tmp_cleanup():
     """
