@@ -1,0 +1,4 @@
+boto3==1.38.41
+pandas==2.0.3
+PyMySQL==1.1.1
+tmdbsimple==2.9.1
