@@ -62,7 +62,8 @@ def generate_genres_table(conn, data, leave_open=False):
     genre_create = "CREATE TABLE genres (id INTEGER PRIMARY KEY, name VARCHAR(32))"
     genre_insert = dict_list_to_insert_str(data, "genres", ["id", "name"])
     genre_read = None
-    with open("sql\\select_from_genres.sql", "r") as f:
+    genre_select_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", select_from_genres.sql)
+    with open(genre_select_path, "r") as f:
         genre_read = f.read()
 
     try:
@@ -137,7 +138,8 @@ def create_or_replace_movie_details_table(conn, leave_open=False):
     try:
         cursor = conn.cursor()
         ddl = ""
-        with open("sql\\create_table_movie_details.sql", "r") as f:
+        create_movie_details_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", "create_table_movie_details.sql")
+        with open(create_movie_details_path, "r") as f:
             ddl = f.read()
         cursor.execute(ddl)
         print("Table 'movie_details' created...")
@@ -187,7 +189,7 @@ def select_from_table(conn, select_query, leave_open=False, write_to_file=False)
             xlsx_name = (
                 select_query.split(".")[0].split("\\")[-1].split("/")[-1] + ".xlsx"
             )
-            xlsx_path = os.path.join(constants.BASE_FILE_PATH, xlsx_name)
+            xlsx_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH, xlsx_name)
             df.to_excel(xlsx_path, index=False)
         print("Got results from the select statement...")
 
@@ -271,7 +273,7 @@ def dict_list_to_insert_str(data, table, cols):
     vals_str = vals_str[:-2]
     insert_str = insert_str + vals_str
     insert_file_path = os.path.join(
-        constants.BASE_FILE_PATH, f"insert_into_{table}.sql"
+        os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH, f"insert_into_{table}.sql"
     )
     with codecs.open(insert_file_path, "w", "utf-8") as f:
         f.write(insert_str)
