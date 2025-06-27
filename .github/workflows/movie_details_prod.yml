@@ -30,5 +30,16 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Generate movie_details
+      env:
+        AIVEN_DB_HOST: ${{ secrets.AIVEN_DB_HOST }}
+        AIVEN_DB_PASS: ${{ secrets.AIVEN_DB_PASS }}
+        AIVEN_DB_PORT: ${{ secrets.AIVEN_DB_PORT }}
+        AIVEN_DB_USER: ${{ secrets.AIVEN_DB_USER }}
+        FILEBASE_BUCKET: ${{ secrets.FILEBASE_BUCKET }}
+        FILEBASE_KEY: ${{ secrets.FILEBASE_KEY }}
+        FILEBASE_SECRET: ${{ secrets.FILEBASE_SECRET }}
+        TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        DB: ${{ vars.DB }}
+        S3_ENDPOINT_URL: ${{ vars.S3_ENDPOINT_URL }}
       run: |
         python create_or_replace_movie_details.py
