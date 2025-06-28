@@ -219,9 +219,14 @@ def insert_into_movie_details(conn, movie_library, leave_open=False):
     :param leave_open: A boolean indicating whether to leave the connection open
     :return: A string indicating whether the insert statement was successful or not
     """
-    if not movie_library:
-        return "Nothing to insert..."
     create_or_replace_movie_details_table(conn, leave_open=True)
+    
+    if not movie_library:
+        if not leave_open:
+            print("Closing connection...")
+            conn.close()
+            print("Connection closed...")
+        return "Nothing to insert..."
 
     table_name = "movie_details"
     print("Generating insert statement...")
