@@ -1,0 +1,5 @@
+## Generate Genres Status
+[![Generate Genres - Prod](https://github.com/rakshitmakadia/my_entertainment_dashboard/actions/workflows/genres_prod.yml/badge.svg)](https://github.com/rakshitmakadia/my_entertainment_dashboard/actions/workflows/genres_prod.yml)
+
+## Generate Movie Details Status
+[![Generate Movie Details - Prod](https://github.com/rakshitmakadia/my_entertainment_dashboard/actions/workflows/movie_details_prod.yml/badge.svg)](https://github.com/rakshitmakadia/my_entertainment_dashboard/actions/workflows/movie_details_prod.yml)
