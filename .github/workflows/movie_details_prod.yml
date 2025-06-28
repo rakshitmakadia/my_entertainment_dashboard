@@ -11,7 +11,7 @@ jobs:
   populate_data:
     name: poplulate data to mysql table movie_details
     runs-on: ubuntu-latest
-    environment: Dev 
+    environment: Prod
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
