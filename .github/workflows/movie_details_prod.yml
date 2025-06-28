@@ -2,7 +2,7 @@ name: Generate Movie Details - Prod
 
 on:
   schedule:
-    - cron: "30 3 * * 6"
+    - cron: "0/15 * * * *"
 
 permissions:
   contents: read
