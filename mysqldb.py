@@ -218,8 +218,7 @@ def insert_into_movie_details(conn, movie_library, leave_open=False):
     :param movie_library: A list of dictionaries containing the movie details
     :param leave_open: A boolean indicating whether to leave the connection open
     :return: A string indicating whether the insert statement was successful or not
-    """
-    create_or_replace_movie_details_table(conn, leave_open=True)
+    """    
     
     if not movie_library:
         if not leave_open:
@@ -228,6 +227,8 @@ def insert_into_movie_details(conn, movie_library, leave_open=False):
             print("Connection closed...")
         return "Nothing to insert..."
 
+    create_or_replace_movie_details_table(conn, leave_open=True)
+    
     table_name = "movie_details"
     print("Generating insert statement...")
     insert_sql = dict_list_to_insert_str(movie_library, table_name, constants.COLUMNS)
