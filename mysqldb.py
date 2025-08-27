@@ -1,8 +1,9 @@
 import constants
+import google_sheet
 import os
 import codecs
 import pymysql
-
+import pandas as pd
 
 def get_mysql_conn():
     # conn_str = f"mysql://{user}:{password}@{host}:{port}/{db}"
@@ -151,29 +152,27 @@ def create_or_replace_movie_details_table(conn, leave_open=False):
             print("Connection closed...")
 
 
-def select_from_table(conn, select_query, leave_open=False, write_to_file=False):
+def select_from_table(conn, select_query, leave_open=False, write_to_file=False, write_to_gsheet=True):
     """
-    Connects to the MySQL database using the provided connection object, and executes a select statement defined in a file.
+    Connects to the MySQL database using the provided connection object, and executes a select statement from the provided file path.
 
-    The function takes in a connection object, a file path to a SQL select statement, a boolean indicating whether to leave the connection open, and a boolean indicating whether to write the result to an Excel file.
+    The function will return a pandas DataFrame containing the results of the select statement.
 
-    If the leave_open parameter is False, the connection will be closed when the function is finished.
+    If leave_open is False, the connection will be closed when the function is finished.
 
-    If the write_to_file parameter is True, the function will write the result to an Excel file in the directory specified in constants.BASE_FILE_PATH.
+    If write_to_file is True, the results will be written to an Excel file.
 
-    The function will return the result of the select statement as a list of dictionaries, each dictionary containing the column names and their associated values.
-
-    If the select statement fails to execute, an error message will be printed with details of the error.
-
-    If the write_to_file parameter is True and the file fails to write, an error message will be printed with details of the error.
+    If write_to_gsheet is True, the results will be written to a Google Sheet.
 
     :param conn: A pymysql connection object
     :param select_query: A file path to a SQL select statement
     :param leave_open: A boolean indicating whether to leave the connection open
     :param write_to_file: A boolean indicating whether to write the result to an Excel file
-    :return: A list of dictionaries, each dictionary containing the column names and their associated values
+    :param write_to_gsheet: A boolean indicating whether to write the results to a Google Sheet. Defaults to True
+    :return: A pandas DataFrame containing the results of the select statement
     """
-    result = None
+
+    result_df = None
     select_sql = None
     with open(select_query, "r") as f:
         select_sql = f.read()
@@ -182,16 +181,24 @@ def select_from_table(conn, select_query, leave_open=False, write_to_file=False)
         cursor = conn.cursor()
         cursor.execute(select_sql)
         result = cursor.fetchall()
-        if write_to_file:
-            import pandas as pd
+        result_df = pd.DataFrame(result)
 
-            df = pd.DataFrame(result)
+        print("Got results from the select statement...")
+
+        if write_to_file:
             xlsx_name = (
                 select_query.split(".")[0].split("\\")[-1].split("/")[-1] + ".xlsx"
             )
             xlsx_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), constants.BASE_FILE_PATH, xlsx_name)
-            df.to_excel(xlsx_path, index=False)
-        print("Got results from the select statement...")
+            result_df.to_excel(xlsx_path, index=False)
+            print("Wrote to Excel file...")
+        
+        if write_to_gsheet:
+            gsheet_res = google_sheet.write_df_to_google_sheet(result_df)
+            print(gsheet_res)
+
+    except Exception as e:
+        print(e)
 
     finally:
         if not leave_open:
@@ -199,7 +206,7 @@ def select_from_table(conn, select_query, leave_open=False, write_to_file=False)
             conn.close()
             print("Connection closed...")
 
-    return result
+    return result_df
 
 
 def insert_into_movie_details(conn, movie_library, leave_open=False):
@@ -219,7 +226,7 @@ def insert_into_movie_details(conn, movie_library, leave_open=False):
     :param leave_open: A boolean indicating whether to leave the connection open
     :return: A string indicating whether the insert statement was successful or not
     """
-    create_or_replace_movie_details_table(conn, leave_open=True)
+      
     
     if not movie_library:
         if not leave_open:
@@ -228,6 +235,8 @@ def insert_into_movie_details(conn, movie_library, leave_open=False):
             print("Connection closed...")
         return "Nothing to insert..."
 
+    create_or_replace_movie_details_table(conn, leave_open=True)
+    
     table_name = "movie_details"
     print("Generating insert statement...")
     insert_sql = dict_list_to_insert_str(movie_library, table_name, constants.COLUMNS)
