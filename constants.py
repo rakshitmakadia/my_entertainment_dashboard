@@ -48,5 +48,5 @@ MOVIE_URL = "https://www.themoviedb.org/movie/movie_id"
 
 ### GOOGLE SHEETS
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SPREADSHEET_ID = '1kRpLlbgE__TftMGHaMz6x31q4ex4v5TTT1sdoVu9wT8'
-SHEET_NAME = 'MoviesData'
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+SHEET_NAME = os.getenv("SHEET_NAME")
