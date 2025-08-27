@@ -45,3 +45,8 @@ COLUMNS = [
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original"
 MOVIE_URL = "https://www.themoviedb.org/movie/movie_id"
+
+### GOOGLE SHEETS
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+SHEET_NAME = os.getenv("SHEET_NAME")
