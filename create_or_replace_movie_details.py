@@ -6,21 +6,20 @@ import os
 
 def main(write_files_to_buckets=True):
     """
-    Executes the process of retrieving the latest movie URLs, extracting movie details from TMDb, and storing them in a MySQL database. It also handles the cleanup of outdated files and optional upload of files to an S3 bucket.
-
-    The function performs the following steps:
-    1. Connects to the MySQL database.
-    2. Retrieves the latest URL file from the S3 bucket.
-    3. Parses the URLs to extract movie IDs.
-    4. Fetches movie details from TMDb using the extracted movie IDs.
-    5. Inserts the movie details into the 'movie_details' table in the database.
-    6. Reads and writes the contents of the 'movie_details' table to an Excel file.
-    7. Deletes files in the S3 bucket that are older than 30 days.
-    8. Optionally uploads files from local storage to the S3 bucket.
-    9. Cleans up local temporary files.
-
-    :param write_files_to_buckets: A boolean indicating whether to upload files to the S3 bucket.
-    :return: None
+    Main function to orchestrate the process of updating and managing movie details.
+    This function performs the following steps:
+    1. Creates a local temporary directory for file operations.
+    2. Establishes a connection to the MySQL database.
+    3. Retrieves the latest URL file containing movie data.
+    4. Extracts movie IDs from the URL file.
+    5. Fetches detailed movie information for the extracted IDs.
+    6. Inserts or updates the movie details in the database.
+    7. Reads the 'movie_details' table using a custom SQL query and writes the results to a file and Google Sheet.
+    8. Deletes temporary folders older than 30 days.
+    9. Optionally uploads files to a remote storage bucket.
+    10. Cleans up the local temporary directory.
+    Args:
+        write_files_to_buckets (bool, optional): If True, uploads generated files to a remote storage bucket. Defaults to True.
     """
 
     filebase.create_local_tmp()
@@ -38,10 +37,9 @@ def main(write_files_to_buckets=True):
 
     select_movie_details_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", "select_from_movie_details.sql")
     result = mysqldb.select_from_table(
-        conn, select_movie_details_path, write_to_file=True
+        conn, select_movie_details_path, write_to_file=True, write_to_gsheet=True
     )
-    # print(result)
-
+    
     filebase.delete_folder_30days()
 
     if write_files_to_buckets:

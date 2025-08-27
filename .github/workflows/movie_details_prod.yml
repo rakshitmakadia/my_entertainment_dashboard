@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   populate_data:
@@ -14,6 +15,11 @@ jobs:
     environment: Prod
     steps:
     - uses: actions/checkout@v4
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: "projects/737871976843/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider"
+        service_account: "mep-service-account@myentertainmentproject.iam.gserviceaccount.com"
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -39,6 +45,8 @@ jobs:
         FILEBASE_KEY: ${{ secrets.FILEBASE_KEY }}
         FILEBASE_SECRET: ${{ secrets.FILEBASE_SECRET }}
         TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+        SHEET_NAME: ${{ secrets.SHEET_NAME }}
         DB: ${{ vars.DB }}
         S3_ENDPOINT_URL: ${{ vars.S3_ENDPOINT_URL }}
       run: |

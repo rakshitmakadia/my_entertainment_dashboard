@@ -192,3 +192,24 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+pyvenv.cfg
+Scripts/activate
+Scripts/activate.bat
+Scripts/Activate.ps1
+Scripts/deactivate.bat
+Scripts/f2py.exe
+Scripts/jp.py
+Scripts/normalizer.exe
+Scripts/pip.exe
+Scripts/pip3.11.exe
+Scripts/pip3.exe
+Scripts/python.exe
+Scripts/pythonw.exe
+myentertainmentproject.json
+Scripts/google-oauthlib-tool.exe
+Scripts/pyrsa-decrypt.exe
+Scripts/pyrsa-encrypt.exe
+Scripts/pyrsa-keygen.exe
+Scripts/pyrsa-priv2pub.exe
+Scripts/pyrsa-sign.exe
+Scripts/pyrsa-verify.exe
