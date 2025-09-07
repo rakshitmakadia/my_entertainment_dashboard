@@ -42,8 +42,8 @@ movies_with_genre AS (
 		m.popularity,
 		m.vote_average,
 		m.vote_count,
-		CONCAT('https://image.tmdb.org/t/p/original', m.backdrop_path) AS backdrop_path,
-		CONCAT('https://image.tmdb.org/t/p/original', m.poster_path) AS poster_path,
+		m.backdrop_path,
+		m.poster_path,
 		m.belongs_to_collection,
 		m.publication_id
 	FROM movies m
