@@ -51,6 +51,8 @@ def get_movies_from_urls(url_file):
         urls = f.readlines()
     movie_ids = list(filter(lambda x: x["type"] == "movie", map(parse_from_url, urls)))
 
+    movie_ids = list({d['id']: d for d in movie_ids}.values())
+
     for mov in movie_ids:
         mov["src_tag"] = url_file.split("\\")[-1]
     return movie_ids
@@ -150,3 +152,5 @@ def get_movie_library(movie_ids):
         movie_library.append(movie_details)
 
     return movie_library
+
+
