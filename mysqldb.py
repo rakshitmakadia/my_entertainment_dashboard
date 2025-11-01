@@ -280,7 +280,10 @@ def dict_list_to_insert_str(data, table, cols):
         vals_str = vals_str + "("
         for col in cols:
             try:
-                vals_str = vals_str + "'" + val[col] + "', "
+                if val[col] == None:
+                    vals_str = vals_str + "'', "
+                else:
+                    vals_str = vals_str + "'" + val[col] + "', "
             except TypeError as e:
                 vals_str = vals_str + str(val[col]) + ", "
         vals_str = vals_str[:-2] + "), "
@@ -296,3 +299,4 @@ def dict_list_to_insert_str(data, table, cols):
         )
 
     return insert_str
+
